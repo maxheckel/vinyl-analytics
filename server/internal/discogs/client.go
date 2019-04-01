@@ -16,8 +16,8 @@ type discogs struct {
 }
 
 func NewDiscogs(token string) *discogs {
-	client := &resty.Client{}
-	client.Header.Set("Authorization", fmt.Sprintf("Discogs token=%s", token))
+	client := resty.New()
+	client.SetHeader("Authorization", fmt.Sprintf("Discogs token=%s", token))
 	return &discogs{client: client}
 }
 

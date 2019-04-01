@@ -19,8 +19,7 @@ func (h *handlers) GetAlbum(writer http.ResponseWriter, request *http.Request) {
 	}
 	album, err := h.albumService.FindAlbum(id)
 	if err != nil {
-		response := responses.NewNotFoundError("Could not find album with ID "+vars["id"])
-		responses.WriteResponse(response.StatusCode, response, writer)
+		responses.NewNotFoundError("Could not find album with ID "+vars["id"], writer)
 		return
 	}
 
