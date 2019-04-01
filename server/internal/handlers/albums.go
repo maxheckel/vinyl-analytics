@@ -7,11 +7,11 @@ import (
 	"strconv"
 )
 
-func (h *handlers) GetAlbums(writer http.ResponseWriter, request *http.Request){
-	
+func (h *handlers) GetAlbums(writer http.ResponseWriter, request *http.Request) {
+
 }
 
-func (h *handlers) GetAlbum(writer http.ResponseWriter, request *http.Request)  {
+func (h *handlers) GetAlbum(writer http.ResponseWriter, request *http.Request) {
 	vars := mux.Vars(request)
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {

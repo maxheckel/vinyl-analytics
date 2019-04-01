@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"app/internal/global"
+	"app/internal/database"
 	"app/internal/repositories"
 	"net/http"
 )
@@ -15,8 +15,9 @@ type handlers struct {
 	albumService repositories.Album
 }
 
-func NewHandlers(database global.Gormw) Handlers {
+func NewHandlers(database database.Gormw) Handlers {
+	albumService := repositories.NewAlbum(database)
 	return &handlers{
-
+		albumService: albumService,
 	}
 }

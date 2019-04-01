@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func main(){
+func main() {
 	fmt.Println("Running")
 	application := app.NewApp()
 	application.Serve()

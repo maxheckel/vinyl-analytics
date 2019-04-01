@@ -1,13 +1,13 @@
 package app
 
 import (
-	"app/internal/global"
+	"app/internal/database"
 	"app/internal/models"
 	"fmt"
 	"github.com/sirupsen/logrus"
 )
 
-func  BuildDatabase(config *Config, logger *logrus.Logger) (global.Gormw, error) {
+func BuildDatabase(config *Config, logger *logrus.Logger) (database.Gormw, error) {
 	connection := fmt.Sprintf(
 		"host=%s port=%s user=%s dbname=%s password=%s sslmode=%s",
 		config.DBHost,
@@ -17,7 +17,7 @@ func  BuildDatabase(config *Config, logger *logrus.Logger) (global.Gormw, error)
 		config.DBPassword,
 		config.DBSSLMode,
 	)
-	db, err := global.Openw("postgres", connection)
+	db, err := database.Openw("postgres", connection)
 	if err != nil {
 		return nil, err
 	}
@@ -25,9 +25,8 @@ func  BuildDatabase(config *Config, logger *logrus.Logger) (global.Gormw, error)
 	return db, nil
 }
 
-func Migrate(database global.Gormw, logger *logrus.Logger) {
+func Migrate(database database.Gormw, logger *logrus.Logger) {
 	logger.Info("Starting migrations")
 	database.AutoMigrate(&models.Album{}, &models.Artist{}, &models.Listen{})
 	logger.Info("Migrations finished!")
 }
-

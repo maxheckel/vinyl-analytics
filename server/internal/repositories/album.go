@@ -1,8 +1,8 @@
 package repositories
 
 import (
+	"app/internal/database"
 	"app/internal/models"
-	"github.com/jinzhu/gorm"
 )
 
 type Album interface {
@@ -11,10 +11,10 @@ type Album interface {
 }
 
 type album struct {
-	database *gorm.DB
+	database database.Gormw
 }
 
-func newAlbum(database *gorm.DB) *album {
+func NewAlbum(database database.Gormw) *album {
 	return &album{database: database}
 }
 
@@ -33,5 +33,3 @@ func (a *album) FindAlbum(id int) *models.Album {
 	a.database.First(&album, id)
 	return album
 }
-
-

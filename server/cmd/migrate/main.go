@@ -5,7 +5,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func main(){
+func main() {
 	cfg, err := app.BuildConfig()
 	if err != nil {
 

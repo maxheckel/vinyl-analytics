@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func (app *App) buildRoutes() {
+func (app *App) BuildRoutes() {
 	r := mux.NewRouter()
 	handlersProvider := handlers.NewHandlers(app.database)
 	r.HandleFunc("/albums", handlersProvider.GetAlbums).Methods(http.MethodGet)

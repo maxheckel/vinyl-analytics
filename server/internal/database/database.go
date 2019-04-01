@@ -1,4 +1,4 @@
-package global
+package database
 
 import (
 	"database/sql"

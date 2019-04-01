@@ -1,7 +1,7 @@
 package app
 
 import (
-	"app/internal/global"
+	"app/internal/database"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -10,13 +10,14 @@ import (
 type App struct {
 	router   *mux.Router
 	Config   *Config
-	database global.Gormw
+	database database.Gormw
 	logger   *logrus.Logger
 }
 
 func NewApp() *App {
 	app := &App{}
-	app.buildLogger()
+	logger := BuildLogger()
+	app.logger = logger
 
 	cfg, err := BuildConfig()
 	if err != nil {
@@ -29,19 +30,16 @@ func NewApp() *App {
 	}
 	app.database = database
 
-	app.buildRoutes()
-
+	app.BuildRoutes()
 
 	return app
 }
-
 
 func (app *App) Serve() {
 	app.validateSetup()
 	app.logger.Info("Starting Server")
 	app.logger.Fatal(http.ListenAndServe(":8081", app.router))
 }
-
 
 func (app *App) validateSetup() {
 	if app.logger == nil {
