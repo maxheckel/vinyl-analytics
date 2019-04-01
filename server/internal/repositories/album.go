@@ -6,7 +6,7 @@ import (
 )
 
 type Album interface {
-	FindAlbum(id int) *models.Album
+	FindAlbum(id int) (*models.Album, error)
 	NewAlbum(name, artwork string, artist models.Artist) models.Album
 }
 
@@ -28,8 +28,11 @@ func (a *album) NewAlbum(name, artwork string, artist models.Artist) models.Albu
 	return album
 }
 
-func (a *album) FindAlbum(id int) *models.Album {
+func (a *album) FindAlbum(id int) (*models.Album, error) {
 	album := &models.Album{}
-	a.database.First(&album, id)
-	return album
+	err := a.database.First(&album, id).Error()
+	if err != nil {
+		return nil, err
+	}
+	return album, nil
 }

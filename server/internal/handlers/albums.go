@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"encoding/json"
+	"app/internal/responses"
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
@@ -17,11 +17,12 @@ func (h *handlers) GetAlbum(writer http.ResponseWriter, request *http.Request) {
 	if err != nil {
 
 	}
-	album := h.albumService.FindAlbum(id)
-	albumJson, err := json.Marshal(album)
+	album, err := h.albumService.FindAlbum(id)
 	if err != nil {
-
+		response := responses.NewNotFoundError("Could not find album with ID "+vars["id"])
+		responses.WriteResponse(response.StatusCode, response, writer)
+		return
 	}
-	writer.WriteHeader(200)
-	_, _ = writer.Write(albumJson)
+
+	responses.WriteResponse(200, album, writer)
 }

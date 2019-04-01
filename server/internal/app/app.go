@@ -24,11 +24,11 @@ func NewApp() *App {
 		app.logger.Fatal(err)
 	}
 	app.Config = cfg
-	database, err := BuildDatabase(cfg, app.logger)
+	db, err := BuildDatabase(cfg, app.logger)
 	if err != nil {
 		app.logger.Fatal(err)
 	}
-	app.database = database
+	app.database = db
 
 	app.BuildRoutes()
 
