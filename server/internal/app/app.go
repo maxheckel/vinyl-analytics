@@ -2,6 +2,7 @@ package app
 
 import (
 	"app/internal/database"
+	"app/internal/setup"
 	"github.com/gorilla/mux"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -9,22 +10,22 @@ import (
 
 type App struct {
 	router   *mux.Router
-	Config   *Config
+	Config   *setup.Config
 	database database.Gormw
 	logger   *logrus.Logger
 }
 
 func NewApp() *App {
 	app := &App{}
-	logger := BuildLogger()
+	logger := setup.BuildLogger()
 	app.logger = logger
 
-	cfg, err := BuildConfig()
+	cfg, err := setup.BuildConfig()
 	if err != nil {
 		app.logger.Fatal(err)
 	}
 	app.Config = cfg
-	db, err := BuildDatabase(cfg, app.logger)
+	db, err := setup.BuildDatabase(cfg, app.logger)
 	if err != nil {
 		app.logger.Fatal(err)
 	}

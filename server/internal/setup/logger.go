@@ -1,4 +1,4 @@
-package app
+package setup
 
 import "github.com/sirupsen/logrus"
 

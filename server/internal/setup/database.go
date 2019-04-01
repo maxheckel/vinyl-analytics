@@ -1,4 +1,4 @@
-package app
+package setup
 
 import (
 	"app/internal/database"

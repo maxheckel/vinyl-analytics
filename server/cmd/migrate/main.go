@@ -1,16 +1,16 @@
 package main
 
 import (
-	"app/internal/app"
+	"app/internal/setup"
 	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	cfg, err := app.BuildConfig()
+	cfg, err := setup.BuildConfig()
 	if err != nil {
 
 	}
 	logger := logrus.New()
-	database, err := app.BuildDatabase(cfg, logger)
-	app.Migrate(database, logger)
+	database, err := setup.BuildDatabase(cfg, logger)
+	setup.Migrate(database, logger)
 }

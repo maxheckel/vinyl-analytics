@@ -1,4 +1,4 @@
-package app
+package setup
 
 import "github.com/kelseyhightower/envconfig"
 
@@ -9,6 +9,8 @@ type Config struct {
 	DBUser     string `envconfig:"DB_USER" default:"vinyl"`
 	DBPassword string `envconfig:"DB_PASSWORD" default:"secret"`
 	DBSSLMode  string `envconfig:"DB_SSLMODE" default:"disable"`
+
+	DiscogsToken string `envconfig:"DISCOGS_TOKEN" default:"RUWgPYGkypLztPqcshEmvlmtDXMJOsGUhEZEyKHY"`
 }
 
 func Load() (*Config, error) {
