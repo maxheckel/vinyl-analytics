@@ -8,6 +8,7 @@ import (
 type Album interface {
 	FindAlbum(id int) (*models.Album, error)
 	NewAlbum(name, artwork string, artist models.Artist) models.Album
+	GetAlbums() ([]*models.Album, error)
 }
 
 type album struct {
@@ -35,4 +36,13 @@ func (a *album) FindAlbum(id int) (*models.Album, error) {
 		return nil, err
 	}
 	return album, nil
+}
+
+func (a *album) GetAlbums() ([]*models.Album, error){
+	var albums []*models.Album
+	err := a.database.Find(&albums).Error()
+	if err != nil {
+		return nil, err
+	}
+	return albums, nil
 }

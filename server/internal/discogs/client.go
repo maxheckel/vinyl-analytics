@@ -8,10 +8,14 @@ import (
 
 type Discogs interface {
 	Search() services.SearchService
+	Masters() services.MastersService
+	Artist() services.ArtistService
 }
 
 type discogs struct {
 	searchService services.SearchService
+	mastersService services.MastersService
+	artistService services.ArtistService
 	client *resty.Client
 }
 
@@ -27,5 +31,22 @@ func (d *discogs) Search() services.SearchService {
 		d.searchService = searchService
 	}
 	return d.searchService
+}
+
+
+func (d *discogs) Masters() services.MastersService {
+	if d.searchService == nil {
+		mastersService := services.NewMasterService(d.client)
+		d.mastersService = mastersService
+	}
+	return d.mastersService
+}
+
+func (d *discogs) Artist() services.ArtistService {
+	if d.searchService == nil {
+		artistService := services.NewArtistService(d.client)
+		d.artistService = artistService
+	}
+	return d.artistService
 }
 

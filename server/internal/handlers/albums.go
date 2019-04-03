@@ -8,7 +8,12 @@ import (
 )
 
 func (h *handlers) GetAlbums(writer http.ResponseWriter, request *http.Request) {
-
+	albums, err := h.albumService.GetAlbums()
+	if err != nil {
+		responses.NewIntegrationError(err.Error(), writer)
+		return
+	}
+	responses.WriteResponse(200, albums, writer)
 }
 
 func (h *handlers) GetAlbum(writer http.ResponseWriter, request *http.Request) {

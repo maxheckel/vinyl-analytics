@@ -11,8 +11,8 @@ import (
 
 //SearchService An interface for searching things in discogs' api
 type SearchService interface {
-	Artists(query string, pagination *models.Pagination) ([]models.Artist, *models.Pagination, error)
-	Albums(query string, pagination *models.Pagination) ([]models.Album, *models.Pagination, error)
+	Artists(query string, pagination *models.Pagination) ([]models.ArtistSearch, *models.Pagination, error)
+	Albums(query string, pagination *models.Pagination) ([]models.AlbumSearch, *models.Pagination, error)
 }
 
 type searchService struct {
@@ -24,11 +24,11 @@ func NewSearchService(client *resty.Client) SearchService {
 	return &searchService{client:client}
 }
 
-//Artists searches artists
-func (s *searchService) Artists(query string, pagination *models.Pagination) ([]models.Artist, *models.Pagination, error) {
+//ArtistSlim searches artists
+func (s *searchService) Artists(query string, pagination *models.Pagination) ([]models.ArtistSearch, *models.Pagination, error) {
 	response, err := s.performSearchWithPagination(query, "artist", pagination)
 	resultStruct := struct {
-		Results []models.Artist `json:"results"`
+		Results []models.ArtistSearch `json:"results"`
 		Pagination *models.Pagination `json:"pagination"`
 	}{}
 	err = json.Unmarshal(response.Body(), &resultStruct)
@@ -40,10 +40,10 @@ func (s *searchService) Artists(query string, pagination *models.Pagination) ([]
 }
 
 //Albums searches albums
-func (s *searchService) Albums(query string, pagination *models.Pagination) ([]models.Album, *models.Pagination, error){
+func (s *searchService) Albums(query string, pagination *models.Pagination) ([]models.AlbumSearch, *models.Pagination, error){
 	response, err := s.performSearchWithPagination(query, "album", pagination)
 	resultStruct := struct {
-		Results []models.Album `json:"results"`
+		Results []models.AlbumSearch  `json:"results"`
 		Pagination *models.Pagination `json:"pagination"`
 	}{}
 	err = json.Unmarshal(response.Body(), &resultStruct)

@@ -1,13 +1,25 @@
 package models
 
+type ArtistSlim struct {
+	Join        string `json:"join"`
+	Name        string `json:"name"`
+	Anv         string `json:"anv"`
+	Tracks      string `json:"tracks"`
+	Role        string `json:"role"`
+	ResourceURL string `json:"resource_url"`
+	ID          int    `json:"id"`
+}
+
 type Artist struct {
-	Thumb       string   `json:"thumb"`
-	Title       string   `json:"title"`
-	MasterURL   *string  `json:"master_url"`
-	URI         string   `json:"uri"`
-	CoverImage  string   `json:"cover_image"`
-	ResourceURL string   `json:"resource_url"`
-	MasterId    *int     `json:"master_id"`
-	UserData    UserData `json:"user_data"`
-	ID          uint     `json:"id"`
+	Profile        string   `json:"profile"`
+	ReleasesURL    string   `json:"releases_url"`
+	Name           string   `json:"name"`
+	URI            string   `json:"uri"`
+	Members        []Member `json:"members"`
+	Urls           []string `json:"urls"`
+	Images         []Image  `json:"images"`
+	ResourceURL    string   `json:"resource_url"`
+	ID             int      `json:"id"`
+	DataQuality    string   `json:"data_quality"`
+	Namevariations []string `json:"namevariations"`
 }

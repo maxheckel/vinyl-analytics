@@ -29,7 +29,7 @@ func (h *handlers) DiscoverAlbums(writer http.ResponseWriter, request *http.Requ
 	}
 
 	searchResponses := struct {
-		Albums []models.Album `json:"albums"`
+		Albums []models.AlbumSearch   `json:"albums"`
 		Pagination *models.Pagination `json:"pagination"`
 	}{
 		Albums: albums,
