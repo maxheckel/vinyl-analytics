@@ -3,13 +3,12 @@ package handlers
 import (
 	"app/internal/discogs/models"
 	"app/internal/responses"
-	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
 )
 
-func (h *handlers) SearchArtist(writer http.ResponseWriter, request *http.Request){
+func (h *handlers) DiscoverAlbums(writer http.ResponseWriter, request *http.Request){
 	vars := mux.Vars(request)
 	var pagination *models.Pagination
 	if vars["page"] != "" || vars["per_page"] != "" {
@@ -23,19 +22,18 @@ func (h *handlers) SearchArtist(writer http.ResponseWriter, request *http.Reques
 			Page:    uint(page),
 		}
 	}
-	artists, pagination, err := h.discogs.Search().Artists(vars["name"], pagination)
+	albums, pagination, err := h.discogs.Search().Albums(vars["name"], pagination)
 	if err != nil {
 		responses.NewIntegrationError(err.Error(), writer)
 		return
 	}
 
 	searchResponses := struct {
-		Artists    []models.Artist    `json:"artists"`
+		Albums []models.Album `json:"albums"`
 		Pagination *models.Pagination `json:"pagination"`
 	}{
-		Artists:    artists,
+		Albums: albums,
 		Pagination: pagination,
 	}
-	fmt.Println(searchResponses.Artists)
 	responses.WriteResponse(200, searchResponses, writer)
 }

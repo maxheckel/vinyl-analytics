@@ -11,7 +11,7 @@ import (
 type Handlers interface {
 	GetAlbums(writer http.ResponseWriter, request *http.Request)
 	GetAlbum(writer http.ResponseWriter, request *http.Request)
-	SearchArtist(writer http.ResponseWriter, request *http.Request)
+	DiscoverAlbums(writer http.ResponseWriter, request *http.Request)
 }
 
 type handlers struct {
