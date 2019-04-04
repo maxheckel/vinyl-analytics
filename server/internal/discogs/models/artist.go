@@ -7,7 +7,7 @@ type ArtistSlim struct {
 	Tracks      string `json:"tracks"`
 	Role        string `json:"role"`
 	ResourceURL string `json:"resource_url"`
-	ID          int    `json:"id"`
+	ID          uint   `json:"id"`
 }
 
 type Artist struct {
@@ -19,7 +19,7 @@ type Artist struct {
 	Urls           []string `json:"urls"`
 	Images         []Image  `json:"images"`
 	ResourceURL    string   `json:"resource_url"`
-	ID             int      `json:"id"`
+	ID             uint      `json:"id"`
 	DataQuality    string   `json:"data_quality"`
 	Namevariations []string `json:"namevariations"`
 }

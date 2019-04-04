@@ -3,12 +3,16 @@ package repositories
 import (
 	"app/internal/database"
 	"app/internal/models"
+	"errors"
+	"fmt"
 )
 
 type Album interface {
-	FindAlbum(id int) (*models.Album, error)
+	FindAlbum(id uint) (*models.Album, error)
 	NewAlbum(name, artwork string, artist models.Artist) models.Album
 	GetAlbums() ([]*models.Album, error)
+	CreateAlbum(newAlbum *models.Album) error
+	DeleteAlbum(albumId uint) error
 }
 
 type album struct {
@@ -29,7 +33,7 @@ func (a *album) NewAlbum(name, artwork string, artist models.Artist) models.Albu
 	return album
 }
 
-func (a *album) FindAlbum(id int) (*models.Album, error) {
+func (a *album) FindAlbum(id uint) (*models.Album, error){
 	album := &models.Album{}
 	err := a.database.First(&album, id).Error()
 	if err != nil {
@@ -40,9 +44,39 @@ func (a *album) FindAlbum(id int) (*models.Album, error) {
 
 func (a *album) GetAlbums() ([]*models.Album, error){
 	var albums []*models.Album
-	err := a.database.Find(&albums).Error()
+	err := a.database.Preload("Artist").Find(&albums).Error()
 	if err != nil {
 		return nil, err
 	}
 	return albums, nil
+}
+
+func (a *album) CreateAlbum(newAlbum *models.Album) error{
+	var artistExists models.Artist
+	a.database.Where("discogs_id = ?", newAlbum.Artist.DiscogsId).Find(&artistExists)
+	if artistExists.ID > 0 {
+		newAlbum.Artist = artistExists
+		newAlbum.ArtistID = artistExists.ID
+	}
+
+	return a.database.Create(newAlbum).Error()
+}
+
+func (a *album) DeleteAlbum(albumId uint) error{
+	var albumToDelete models.Album
+	a.database.Preload("Artist").Find(&albumToDelete, albumId)
+	if albumToDelete.ID == 0 {
+		return errors.New(fmt.Sprintf("album with id %d does not exist", albumId))
+	}
+	var otherAlbum models.Album
+	err := a.database.Where("artist_id = ?", albumToDelete.ArtistID).Find(&otherAlbum).Error()
+	if otherAlbum.ID == 0 {
+		err = a.database.Model(&albumToDelete.Artist).Delete(&albumToDelete.Artist).Error()
+	}
+	err = a.database.Model(&albumToDelete).Delete(&albumToDelete).Error()
+
+	if err != nil {
+		return err
+	}
+	return nil
 }

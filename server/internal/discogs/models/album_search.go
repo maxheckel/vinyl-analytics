@@ -9,14 +9,14 @@ type AlbumSearch struct {
 	Style       []string  `json:"style"`
 	Barcode     []string  `json:"barcode"`
 	Thumb       string    `json:"thumb"`
-	Uri         string    `json:"uri"`
+	URI         *url.URL  `json:"uri"`
 	Title       string    `json:"title"`
 	Country     string    `json:"country"`
 	Format      []string  `json:"format"`
 	UserData    UserData  `json:"user_data"`
 	Community   Community `json:"community"`
 	Label       []string  `json:"label"`
-	CoverImage  string    `json:"cover_image"`
+	CoverImage  *url.URL  `json:"cover_image"`
 	Catno       string    `json:"catno"`
 	MasterURL   *url.URL  `json:"master_url"`
 	Year        string    `json:"year"`
@@ -31,6 +31,8 @@ func (a *AlbumSearch) UnmarshalJSON(data []byte) error {
 	type Alias AlbumSearch
 	aux := &struct {
 		MasterURL string `json:"master_url"`
+		CoverImage string `json:"cover_image"`
+		URI string `json:"uri"`
 		*Alias
 	}{
 		Alias: (*Alias)(a),
@@ -43,5 +45,17 @@ func (a *AlbumSearch) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.MasterURL = masterURL
+
+	coverImage, err := url.Parse(aux.CoverImage)
+	if err != nil {
+		return err
+	}
+	a.CoverImage = coverImage
+
+	uri, err := url.Parse(aux.URI)
+	if err != nil {
+		return err
+	}
+	a.URI = uri
 	return nil
 }

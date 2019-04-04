@@ -1,11 +1,10 @@
 package models
 
-import "github.com/jinzhu/gorm"
-
 type Album struct {
-	*gorm.Model
-	Name     string `gorm:"type:text"`
-	Artwork  string `gorm:"type:text"`
-	ArtistID uint   `gorm:"type:int"`
-	Artist   Artist
+	*Model
+	Name     string `gorm:"type:text" json:"name"`
+	Artwork  string `gorm:"type:text" json:"artwork"`
+	ArtistID uint   `gorm:"type:int" json:"artist_id"`
+	Artist   Artist `json:"artist"`
 }
+

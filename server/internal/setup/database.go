@@ -27,6 +27,6 @@ func BuildDatabase(config *Config, logger *logrus.Logger) (database.Gormw, error
 
 func Migrate(database database.Gormw, logger *logrus.Logger) {
 	logger.Info("Starting migrations")
-	database.AutoMigrate(&models.Album{}, &models.Artist{}, &models.Listen{})
+	database.AutoMigrate(models.Album{}, models.Artist{}, models.Listen{})
 	logger.Info("Migrations finished!")
 }

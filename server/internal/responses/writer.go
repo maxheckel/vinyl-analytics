@@ -6,6 +6,10 @@ import (
 )
 
 func WriteResponse(statusCode int, data interface{}, writer http.ResponseWriter){
+	if data == nil {
+		writer.WriteHeader(statusCode)
+		return
+	}
 	responseJson, err := json.Marshal(data)
 	if err != nil {
 		NewInternalError("Could not marshal struct to json", writer)

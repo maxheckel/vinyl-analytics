@@ -25,10 +25,11 @@ func (m *masterService) GetMaster(id uint) (*models.Master, error) {
 		 return nil, err
 	}
 	master := &models.Master{}
-	err = json.Unmarshal(results.Body(), master)
+	err = json.Unmarshal(results.Body(), &master)
 	if err != nil {
 		return nil, err
 	}
+
 	return master, nil
 }
 
