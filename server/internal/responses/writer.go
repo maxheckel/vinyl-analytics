@@ -24,3 +24,19 @@ func WriteResponse(statusCode int, data interface{}, writer http.ResponseWriter)
 	}
 
 }
+
+func WriteResponseRaw(statusCode int, data []byte, writer http.ResponseWriter){
+	if data == nil {
+		writer.WriteHeader(statusCode)
+		return
+	}
+
+	writer.Header().Set("Content-Type", "application/json")
+	writer.WriteHeader(statusCode)
+	_, err := writer.Write(data)
+	if err != nil {
+		NewInternalError("Could not write response", writer)
+		return
+	}
+
+}

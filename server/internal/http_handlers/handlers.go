@@ -1,4 +1,4 @@
-package handlers
+package http_handlers
 
 import (
 	"app/internal/database"
@@ -18,6 +18,8 @@ type Handlers interface {
 	CreateListen(writer http.ResponseWriter, request *http.Request)
 	GetListens(writer http.ResponseWriter, request *http.Request)
 	GetTotalListens(writer http.ResponseWriter, request *http.Request)
+
+	Listen(writer http.ResponseWriter, request *http.Request)
 }
 
 type handlers struct {

@@ -18,7 +18,7 @@ services:
     working_dir: /Users/maxheckel/Sites/vinyl-analytics/server
     command: |-
       bash -c '
-      set -ex; go get -u github.com/codegangsta/gin; gin \
+      set -ex; apt-get update; apt-get install -y php7.0-fpm php7.0-curl; go get -u github.com/codegangsta/gin; gin \
               -i \
               -d server/cmd/app \
               -x vendor \
