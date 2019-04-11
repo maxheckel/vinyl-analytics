@@ -6,5 +6,6 @@ type Album struct {
 	Artwork  string `gorm:"type:text" json:"artwork"`
 	ArtistID uint   `gorm:"type:int" json:"artist_id"`
 	Artist   Artist `json:"artist"`
+	DiscogsId uint `json:"discogs_id"`
 }
 

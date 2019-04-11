@@ -29,7 +29,7 @@ type Music struct {
 	Acrid            string           `json:"acrid"`
 	Title            string           `json:"title"`
 	DurationMs       int              `json:"duration_ms"`
-	AlbumName        Album            `json:"album"`
+	AlbumName        AlbumName        `json:"album"`
 	Score            int              `json:"score"`
 	ExternalMetadata ExternalMetadata `json:"external_metadata"`
 	ReleaseDate      string           `json:"release_date"`

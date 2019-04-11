@@ -1,33 +1,27 @@
 <template>
     <div class="listen">
-        <button v-show="!listening" @click="startListening">
+        <button class="main-button" v-show="!listening" @click="startListening">
             Listen
         </button>
         <div class="listening" v-show="listening">
             Listening...
         </div>
         <div v-show="!listening">
-            <div v-if="listenResponse.metadata.music[0] !== undefined && listenResponse.metadata.music !== null">
-                I heard {{listenResponse.metadata.music[0].title}}
-            </div>
-            <div v-if="hasListened && listenResponse.metadata.music === null ">
-                Could not determine song
+            <div v-if="listenResponse !== undefined">
+
             </div>
         </div>
     </div>
 </template>
 <script>
+    import LR from '../services/ListenRepository'
     export default {
         name: "Listen",
         data: function(){
             return {
                 listening: false,
                 hasListened: false,
-                listenResponse: {
-                    metadata:{
-                        music:[]
-                    }
-                }
+                listenResponse: undefined
             }
         },
         methods:{
@@ -55,21 +49,12 @@
                     }
                 }
                 function sendData(data) {
-                    var fd = new FormData();
-                    fd.append('fname', 'test.wav');
-                    fd.append('data', data);
-
-                    var request = new XMLHttpRequest();
-                    request.open("POST", "http://localhost:8081/listen");
-                    request.send(fd);
-
-                    request.onreadystatechange = function() {
-                        if (request.readyState == 4 && request.status == 200)
-                            self.hasListened = true;
-                            self.listening = false;
-                            var response = JSON.parse(request.responseText)
-                            self.listenResponse = response
-                    }
+                    LR.listen(data).then(function (response) {
+                        self.hasListened = true;
+                        self.listening = false;
+                        console.log(response.data)
+                        self.listenResponse = response.data;
+                    })
 
 
                 }
