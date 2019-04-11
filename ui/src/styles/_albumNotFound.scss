@@ -1,0 +1,62 @@
+.albumNotFound{
+  width: 100%;
+  text-align: left;
+
+  .info{
+    width: 100%;
+    .art{
+      width: 30%;
+      display: inline-block;
+      img{
+        width: 100%;
+      }
+    }
+    .details{
+      padding: 0px 20px;
+      box-sizing: border-box;
+      vertical-align: top;
+      width: 70%;
+      display: inline-block;
+      span{
+        display: block;
+      }
+      .albumTitle{
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .artistTitle{
+        font-size: 18px;
+        font-style: italic;
+      }
+      .songTitle{
+        font-size: 14px;
+      }
+    }
+  }
+
+  .controls{
+    box-sizing: border-box;
+
+    a{
+      display: inline-block;
+      width: 100%;
+      background-color: #FFF;
+      color: #000;
+      /* margin: 10px; */
+      text-align: center;
+      font-size: 22px;
+      margin-top: 20px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .otherOptions{
+      a{
+        width: calc(50% - 10px);
+      }
+      .tryAgain{
+        margin-right: 20px;
+      }
+    }
+  }
+
+}

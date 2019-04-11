@@ -1,20 +1,30 @@
 <template>
     <div class="listen">
-        <button class="main-button" v-show="!listening" @click="startListening">
-            Listen
-        </button>
-        <div class="listening" v-show="listening">
-            Listening...
+        <div v-show="listenResponse == undefined">
+            <button class="main-button" v-show="!listening" @click="startListening">
+                Listen
+            </button>
+            <div class="listening" v-show="listening">
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </div>
         </div>
         <div v-show="!listening">
             <div v-if="listenResponse !== undefined">
-
+                <i class="fas fa-chevron-left" @click="stopListening"></i>
+                <div v-if="listenResponse.album_found === false">
+                    <AlbumNotFound :listen-response="listenResponse"></AlbumNotFound>
+                </div>
+                <div v-if="listenResponse.album_found">
+                    <AlbumFound :listen-response="listenResponse"></AlbumFound>
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script>
     import LR from '../services/ListenRepository'
+    import AlbumFound from './AlbumFound'
+    import AlbumNotFound from "./AlbumNotFound";
     export default {
         name: "Listen",
         data: function(){
@@ -24,7 +34,15 @@
                 listenResponse: undefined
             }
         },
+        components:{
+            AlbumNotFound,
+            AlbumFound
+        },
         methods:{
+            stopListening(){
+                this.listenResponse = undefined;
+                this.listening = false;
+            },
             startListening(){
                 let id = val => document.getElementById(val)
 
