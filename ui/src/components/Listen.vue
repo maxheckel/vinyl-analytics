@@ -12,18 +12,20 @@
             <div v-if="listenResponse !== undefined">
                 <i class="fas fa-chevron-left" @click="stopListening"></i>
                 <div v-if="listenResponse.album_found === false">
-                    <AlbumNotFound :listen-response="listenResponse"></AlbumNotFound>
+                    <AlbumNotFound v-on:tryAgain="tryAgain" :listen-response="listenResponse"></AlbumNotFound>
                 </div>
                 <div v-if="listenResponse.album_found">
-                    <AlbumFound :listen-response="listenResponse"></AlbumFound>
+
                 </div>
+            </div>
+            <div v-if="notFound">
+
             </div>
         </div>
     </div>
 </template>
 <script>
     import LR from '../services/ListenRepository'
-    import AlbumFound from './AlbumFound'
     import AlbumNotFound from "./AlbumNotFound";
     export default {
         name: "Listen",
@@ -31,17 +33,21 @@
             return {
                 listening: false,
                 hasListened: false,
-                listenResponse: undefined
+                listenResponse: undefined,
+                notFound: false
             }
         },
         components:{
-            AlbumNotFound,
-            AlbumFound
+            AlbumNotFound
         },
         methods:{
             stopListening(){
                 this.listenResponse = undefined;
                 this.listening = false;
+            },
+            tryAgain(){
+                this.listenResponse = undefined;
+                this.startListening()
             },
             startListening(){
                 let id = val => document.getElementById(val)
@@ -70,8 +76,10 @@
                     LR.listen(data).then(function (response) {
                         self.hasListened = true;
                         self.listening = false;
+                        console.log(response)
                         console.log(response.data)
                         self.listenResponse = response.data;
+
                     })
 
 

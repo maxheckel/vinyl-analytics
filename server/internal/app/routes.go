@@ -24,7 +24,11 @@ func (app *App) BuildRoutes() {
 	handlersProvider := http_handlers.NewHandlers(app.database, app.Config)
 	r.HandleFunc("/albums", handlersProvider.GetAlbums).Methods(http.MethodGet)
 	r.HandleFunc("/albums/{id}", handlersProvider.GetAlbum).Methods(http.MethodGet)
-	r.HandleFunc("/albums", handlersProvider.CreateAlbum).Methods(http.MethodPost)
+	r.HandleFunc("/albums", handlersProvider.CreateAlbum).Methods(http.MethodPost, http.MethodOptions)
+	//r.HandleFunc("/albums", func(writer http.ResponseWriter, request *http.Request) {
+	//
+	//}).Methods(http.MethodOptions)
+
 	r.HandleFunc("/albums/{id}", handlersProvider.DeleteAlbum).Methods(http.MethodDelete)
 
 	r.HandleFunc("/discovery/albums/{name}", handlersProvider.DiscoverAlbums).Methods(http.MethodGet)

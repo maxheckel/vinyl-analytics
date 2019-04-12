@@ -8,11 +8,9 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"math/rand"
 	"net/http"
 	"os"
-	"os/exec"
 	"time"
 )
 
@@ -36,15 +34,15 @@ func (h *handlers) Listen(writer http.ResponseWriter, request *http.Request){
 			}
 
 
-			out, err := exec.Command("/usr/bin/php", "/Users/maxheckel/Sites/vinyl-analytics/server/server/test.php", fileName).Output()
-			if err != nil {
-				log.Fatal(err)
-			}
+			//out, err := exec.Command("/usr/bin/php", "/Users/maxheckel/Sites/vinyl-analytics/server/server/test.php", fileName).Output()
+			//if err != nil {
+			//	log.Fatal(err)
+			//}
 			go os.Remove(fileName)
-			//outString := `{"metadata":{"timestamp_utc":"2019-04-11 02:11:58","music":[{"label":"Roadrunner Records","play_offset_ms":20980,"external_ids":{},"result_from":1,"artists":[{"name":"Coheed and Cambria"}],"external_metadata":{},"title":"Old Flames","duration_ms":350300,"album":{"name":"Old Flames"},"score":100,"acrid":"3de981f9fc8adb792648cd11b5cd0488","release_date":"2018-09-27"},{"label":"Rogue Johnsen","play_offset_ms":16920,"external_ids":{},"result_from":1,"external_metadata":{},"acrid":"c86678614798c26d28bab96cff938935","title":"Tides of Time","duration_ms":272160,"album":{"name":"Way Back"},"score":82,"artists":[{"name":"Rogue Johnsen"}],"release_date":"2016-01-01"},{"label":"eOne Music International Classics","play_offset_ms":4500,"external_ids":{},"result_from":1,"external_metadata":{},"acrid":"e7170f840e8747c9540f6526aeb04795","title":"Twelve Preludes - 4","duration_ms":106600,"album":{"name":"Arden, David - Contemporary Piano Music: Piano Music By Part, Gorecki And Ustvolskaya"},"score":79,"artists":[{"name":"David Arden"}],"release_date":"1995-05-23"},{"play_offset_ms":15940,"external_ids":{},"artists":[{"name":"Jeanette Alexander"}],"result_from":1,"acrid":"4ac7a6491e5cd2c0dd1e6be7c07faa88","title":"Don't Ask Me Why","duration_ms":239060,"album":{"name":"Still Point"},"score":76,"external_metadata":{},"release_date":"1999-01-01"},{"label":"Jonathan Reed","play_offset_ms":116300,"external_ids":{},"result_from":1,"external_metadata":{},"acrid":"a93a960fc8fcac47f6af0b15efd5f1af","title":"Abide With Me \/ Jesus, I Am Resting, Resting","duration_ms":245613,"album":{"name":"Prayer Hymns"},"score":73,"artists":[{"name":"Jonathan Reed"}],"release_date":"2015-08-19"}]},"cost_time":2.1119999885559,"status":{"msg":"Success","version":"1.0","code":0},"result_type":0}`
+			outString := `{"metadata":{"timestamp_utc":"2019-04-11 02:11:58","music":[{"label":"Roadrunner Records","play_offset_ms":20980,"external_ids":{},"result_from":1,"artists":[{"name":"Coheed and Cambria"}],"external_metadata":{},"title":"Old Flames","duration_ms":350300,"album":{"name":"Old Flames"},"score":100,"acrid":"3de981f9fc8adb792648cd11b5cd0488","release_date":"2018-09-27"},{"label":"Rogue Johnsen","play_offset_ms":16920,"external_ids":{},"result_from":1,"external_metadata":{},"acrid":"c86678614798c26d28bab96cff938935","title":"Tides of Time","duration_ms":272160,"album":{"name":"Way Back"},"score":82,"artists":[{"name":"Rogue Johnsen"}],"release_date":"2016-01-01"},{"label":"eOne Music International Classics","play_offset_ms":4500,"external_ids":{},"result_from":1,"external_metadata":{},"acrid":"e7170f840e8747c9540f6526aeb04795","title":"Twelve Preludes - 4","duration_ms":106600,"album":{"name":"Arden, David - Contemporary Piano Music: Piano Music By Part, Gorecki And Ustvolskaya"},"score":79,"artists":[{"name":"David Arden"}],"release_date":"1995-05-23"},{"play_offset_ms":15940,"external_ids":{},"artists":[{"name":"Jeanette Alexander"}],"result_from":1,"acrid":"4ac7a6491e5cd2c0dd1e6be7c07faa88","title":"Don't Ask Me Why","duration_ms":239060,"album":{"name":"Still Point"},"score":76,"external_metadata":{},"release_date":"1999-01-01"},{"label":"Jonathan Reed","play_offset_ms":116300,"external_ids":{},"result_from":1,"external_metadata":{},"acrid":"a93a960fc8fcac47f6af0b15efd5f1af","title":"Abide With Me \/ Jesus, I Am Resting, Resting","duration_ms":245613,"album":{"name":"Prayer Hymns"},"score":73,"artists":[{"name":"Jonathan Reed"}],"release_date":"2015-08-19"}]},"cost_time":2.1119999885559,"status":{"msg":"Success","version":"1.0","code":0},"result_type":0}`
 
 			listenResponse := &models.ListenResponse{}
-			err = json.Unmarshal(out, listenResponse)
+			err = json.Unmarshal([]byte(outString), listenResponse)
 			if err != nil {
 				responses.NewInternalError(err.Error(), writer)
 				return

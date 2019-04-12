@@ -58,9 +58,19 @@ func (h *handlers) CreateAlbum(writer http.ResponseWriter, request *http.Request
 		responses.NewIntegrationError(err.Error(), writer)
 		return
 	}
+	var tracks []models.Track
+	for _, track := range master.Tracklist{
+		tracks = append(tracks, models.Track{
+			Title:    track.Title,
+			Duration: track.Duration,
+			Position: track.Position,
+		})
+	}
 	album := &models.Album{
 		Name:     master.Title,
 		Artwork:  master.Images[0].URI,
+		Tracks: tracks,
+		DiscogsId: requestBody.DiscogsId,
 		Artist:   models.Artist{
 			Name:  artist.Name,
 			Bio:   artist.Profile,

@@ -1,4 +1,5 @@
 import axios from "axios"
+import Repository from "./Repository";
 
 export default {
     listen(data){
@@ -12,5 +13,8 @@ export default {
             data: fd,
             config: { headers: {'Content-Type': 'multipart/form-data' }}
         })
+    },
+    add(albumId){
+        return Repository.post("listens/"+albumId)
     }
 }
