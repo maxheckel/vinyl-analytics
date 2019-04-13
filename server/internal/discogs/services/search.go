@@ -84,6 +84,7 @@ func (s *searchService) AlbumWithArtist(album, artist string, pagination *models
 		}
 	}
 	searchUrl := fmt.Sprintf("https://api.discogs.com/database/search?type=album&artist=%s&q=%s&page=%d&per_page=%d", url.QueryEscape(artist), url.QueryEscape(album), pagination.Page, pagination.PerPage)
+	fmt.Println(searchUrl)
 	response, err := s.client.R().Get(searchUrl)
 	if err != nil {
 		return nil, nil, err

@@ -13,7 +13,7 @@ type Album interface {
 	GetAlbums() ([]*models.Album, error)
 	CreateAlbum(newAlbum *models.Album) error
 	DeleteAlbum(albumId uint) error
-	GetByDiscogsId(discogsId uint) (*models.Album, error)
+	GetByDiscogsId(discogsId uint) (models.Album, error)
 }
 
 type album struct {
@@ -83,14 +83,14 @@ func (a *album) DeleteAlbum(albumId uint) error {
 	return nil
 }
 
-func (a *album) GetByDiscogsId(discogsId uint) (*models.Album, error) {
-	var albumFound *models.Album
+func (a *album) GetByDiscogsId(discogsId uint) (models.Album, error) {
+	var albumFound models.Album
 	err := a.database.Where("discogs_id = ?", discogsId).Find(&albumFound).Error()
 	if err != nil {
-		return nil, err
+		return albumFound, err
 	}
 	if albumFound.ID > 0 {
 		return albumFound, nil
 	}
-	return nil, errors.New("could not find album")
+	return albumFound, errors.New("could not find album")
 }

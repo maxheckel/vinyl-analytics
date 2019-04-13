@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div v-if="notFound">
-
+                <h3>Couldn't find album</h3>
             </div>
         </div>
     </div>
@@ -73,13 +73,18 @@
                     }
                 }
                 function sendData(data) {
-                    LR.listen(data).then(function (response) {
+                    LR.listen(data).then( (response) => {
                         self.hasListened = true;
                         self.listening = false;
-                        console.log(response)
-                        console.log(response.data)
                         self.listenResponse = response.data;
-
+                        if (response.data.album_found){
+                            LR.add(response.data.album_id).then((res)=>{
+                                self.$router.push("/album/"+response.data.album_id)
+                            })
+                        }
+                    }).catch((err) => {
+                        self.notFound = true
+                        self.stopListening()
                     })
 
 

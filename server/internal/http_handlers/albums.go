@@ -4,6 +4,7 @@ import (
 	"app/internal/models"
 	"app/internal/responses"
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 	"strconv"
@@ -48,7 +49,9 @@ func (h *handlers) CreateAlbum(writer http.ResponseWriter, request *http.Request
 		responses.NewBadRequestErrror("invalid discogs id passed", writer)
 		return
 	}
+	fmt.Println(h.discogs.Masters())
 	master, err := h.discogs.Masters().GetMaster(requestBody.DiscogsId)
+
 	if err != nil {
 		responses.NewIntegrationError(err.Error(), writer)
 		return

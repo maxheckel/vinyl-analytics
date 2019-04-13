@@ -22,31 +22,27 @@ type discogs struct {
 func NewDiscogs(token string) *discogs {
 	client := resty.New()
 	client.SetHeader("Authorization", fmt.Sprintf("Discogs token=%s", token))
-	return &discogs{client: client}
+	d := &discogs{client: client}
+	mastersService := services.NewMasterService(d.client)
+	d.mastersService = mastersService
+	searchService := services.NewSearchService(d.client)
+	d.searchService = searchService
+
+	artistService := services.NewArtistService(d.client)
+	d.artistService = artistService
+	return d
 }
 
 func (d *discogs) Search() services.SearchService {
-	if d.searchService == nil {
-		searchService := services.NewSearchService(d.client)
-		d.searchService = searchService
-	}
 	return d.searchService
 }
 
 
 func (d *discogs) Masters() services.MastersService {
-	if d.searchService == nil {
-		mastersService := services.NewMasterService(d.client)
-		d.mastersService = mastersService
-	}
 	return d.mastersService
 }
 
 func (d *discogs) Artist() services.ArtistService {
-	if d.searchService == nil {
-		artistService := services.NewArtistService(d.client)
-		d.artistService = artistService
-	}
 	return d.artistService
 }
 
