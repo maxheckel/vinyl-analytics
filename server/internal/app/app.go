@@ -39,7 +39,7 @@ func NewApp() *App {
 func (app *App) Serve() {
 	app.validateSetup()
 	app.logger.Info("Starting Server")
-	app.logger.Fatal(http.ListenAndServe(":8081", app.router))
+	app.logger.Fatal(http.ListenAndServe(":80", app.router))
 }
 
 func (app *App) validateSetup() {
