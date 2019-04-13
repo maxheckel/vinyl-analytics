@@ -11,6 +11,8 @@ type Config struct {
 	DBSSLMode  string `envconfig:"DB_SSLMODE" default:"disable"`
 
 	DiscogsToken string `envconfig:"DISCOGS_TOKEN" default:""`
+
+	AppPort  string `envconfig:"APP_PORT" default:"8081"`
 }
 
 func Load() (*Config, error) {
