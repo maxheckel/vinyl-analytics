@@ -37,7 +37,7 @@ func (app *App) BuildRoutes() {
 	r.HandleFunc("/listens/{id}", handlersProvider.GetListens).Methods(http.MethodGet)
 	r.HandleFunc("/listens/{id}/count", handlersProvider.GetTotalListens).Methods(http.MethodGet)
 
-	r.HandleFunc("/listen", handlersProvider.Listen).Methods(http.MethodPost)
+	r.HandleFunc("/listen", handlersProvider.Listen).Methods(http.MethodPost, http.MethodOptions)
 
 	app.router = r
 }
