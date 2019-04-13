@@ -31,11 +31,11 @@ func (h *handlers) Listen(writer http.ResponseWriter, request *http.Request) {
 			fileName := fmt.Sprintf("/tmp/%s.wav", randomString())
 			err := ioutil.WriteFile(fileName, []byte(buf.String()), 7777)
 			if err != nil {
-				responses.NewInternalError("could not write file to server", writer)
+				responses.NewInternalError("could not write file to api", writer)
 				return
 			}
 
-			out, err := exec.Command("/usr/bin/php", "/Users/maxheckel/Sites/vinyl-analytics/server/server/test.php", fileName).Output()
+			out, err := exec.Command("/usr/bin/php", "/Users/maxheckel/Sites/vinyl-analytics/api/api/test.php", fileName).Output()
 			if err != nil {
 				log.Fatal(err)
 			}

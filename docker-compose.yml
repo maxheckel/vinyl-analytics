@@ -14,8 +14,8 @@ services:
   api:
     image: golang:1.11.5
     volumes:
-      - .:/Users/maxheckel/Sites/vinyl-analytics/server
-    working_dir: /Users/maxheckel/Sites/vinyl-analytics/server
+      - .:/Users/maxheckel/Sites/vinyl-analytics/api
+    working_dir: /Users/maxheckel/Sites/vinyl-analytics/api
     env_file:
       - ./.env
     command: |-
@@ -42,7 +42,7 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/Users/maxheckel/Sites/vinyl-analytics/server
-    working_dir: /Users/maxheckel/Sites/vinyl-analytics/server
+      - .:/Users/maxheckel/Sites/vinyl-analytics/api
+    working_dir: /Users/maxheckel/Sites/vinyl-analytics/api
     command: |-
       bash -c './server/scripts/wait-for-it.sh db:5432 && cd server && go run cmd/migrate/main.go'

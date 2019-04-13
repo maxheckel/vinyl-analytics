@@ -41,7 +41,7 @@ func main() {
 	// to base64
 	signatureString := b64.StdEncoding.EncodeToString(hash.Sum(nil))
 
-	filePath := "/Users/maxheckel/Sites/vinyl-analytics/server/cmd/listen/test.mp3"
+	filePath := "/Users/maxheckel/Sites/vinyl-analytics/api/cmd/listen/test.mp3"
 	fileBytes, _ := ioutil.ReadFile(filePath)
 	fi, err := os.Stat(filePath);
 	if err != nil {
