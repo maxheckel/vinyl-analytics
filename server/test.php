@@ -6,8 +6,8 @@ $signature_version = "1" ;
 $timestamp = time() ;
 // Replace "###...###" below with your project's host, access_key and access_secret.
 $requrl = "http://identify-us-west-2.acrcloud.com/v1/identify";
-$access_key =  '629bcdc80a070d899bb7d9cf86ac87eb';
-$access_secret =  'xKrvfcobKOfYiMlGfwp8hQf8BwvvGPV8WR7E5Ad8';
+$access_key =  getenv('ACR_ACCESS_KEY');
+$access_secret =  getenv('ACR_ACCESS_SECRET');
 $string_to_sign = $http_method . "\n" . 
                   $http_uri ."\n" . 
                   $access_key . "\n" . 

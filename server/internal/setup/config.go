@@ -10,7 +10,7 @@ type Config struct {
 	DBPassword string `envconfig:"DB_PASSWORD" default:"secret"`
 	DBSSLMode  string `envconfig:"DB_SSLMODE" default:"disable"`
 
-	DiscogsToken string `envconfig:"DISCOGS_TOKEN" default:"RUWgPYGkypLztPqcshEmvlmtDXMJOsGUhEZEyKHY"`
+	DiscogsToken string `envconfig:"DISCOGS_TOKEN" default:""`
 }
 
 func Load() (*Config, error) {

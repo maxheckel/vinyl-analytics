@@ -16,6 +16,8 @@ services:
     volumes:
       - .:/Users/maxheckel/Sites/vinyl-analytics/server
     working_dir: /Users/maxheckel/Sites/vinyl-analytics/server
+    env_file:
+      - ./.env
     command: |-
       bash -c '
       set -ex; apt-get update; apt-get install -y php7.0-fpm php7.0-curl; go get -u github.com/codegangsta/gin; gin \
